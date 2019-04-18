@@ -1,0 +1,57 @@
+plan for proj 3:
+
+	1. back end
+		(_THURSDAY_)
+		- all terminal comands neccesary to build basic server
+		- npm install the rest of the nesescary things for encryption and authentication
+		- connect to mongo database in app.js
+		(_MONDAY MORNING_)
+		- stub out end points
+			* home/index
+			* create user
+			* profile
+			* add post
+			* search post
+			* login
+			* logout
+		- create user schema model
+		- check in mongo data base 
+		(_MONDAY AFTERNOON_)
+		- import into the users.js routes file
+		- implimnet the logic into routes
+			* home
+				.when logged in
+				.when not logged in
+			* create user
+			* profile page
+			* add post
+			* serach page
+			* login page
+			* logout page
+		- change port number in bin directory www file
+	2. front end
+		(_TUESDAY MORNING_)
+		- all terminal camands to create basic react app
+		- set up proxy in json file
+		- js file for create user component
+		- js file for prfile component
+		- js file for add post component
+		(_TUESDAY AFTERNOON_)
+		- js file for serach post component
+		- js file for login component
+		- js file for logout component 
+		- js file for home component
+		(_WEDNESDAY MORNING_)
+		- call home component in App.js file
+		- all css
+			* home/index
+			* create user
+			* profile
+		(_WEDNESDAY aFTERNOON_)
+			* add post
+			* search post
+			* login
+			* logout
+	3. atempmt chAllenge and final push
+
+		
