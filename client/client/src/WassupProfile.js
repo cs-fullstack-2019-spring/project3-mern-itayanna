@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
-import EditTweet from "./WassupEdit";
+import WassupEdit from "./WassupEdit";
 
 class WassupProfile extends Component {
     constructor(props) {
@@ -42,11 +42,12 @@ class WassupProfile extends Component {
                             <div>
                                 {eachPost.postBody}
                             </div>
-                            <img className={'postImage'} src={eachPost.postImage} alt="post image"/>
+                            <img src={eachPost.postImage} alt="post image"/>
+                            <br/>
                             <Link to={'/edit/' + this.state.userData._id + '/' + eachPost._id}>Edit</Link>
                         </div>
                         <Route path={'/edit/' + this.state.userData._id + '/' + eachPost._id}
-                               component={()=> <EditTweet postBody={eachPost.postBody} postImage={eachPost.postImage} userID={this.state.userData._id} postID={eachPost._id}/>}/>
+                               component={()=> <WassupEdit postBody={eachPost.postBody} postImage={eachPost.postImage} userID={this.state.userData._id} postID={eachPost._id}/>}/>
                     </Router>
                 )
             });
@@ -71,11 +72,12 @@ class WassupProfile extends Component {
         })
     };
 
+
     render() {
         if (this.props.isLoggedIn === true) {
             return (
                 <div>
-                    <h1>{this.props.username}</h1>
+                    <h1 className='profilehead'>{this.props.username}</h1>
                         <div>
                             <img src={this.state.userData.profilePic} alt="profile pic"/>
                             <img src={this.state.userData.backgroundPic} alt="backgroud pic"/>

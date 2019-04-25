@@ -9,7 +9,7 @@ class WassupHome extends Component {
             allPost:[],
             postMap:[],
             posts:[],
-            privatPosts:[],
+            privatePosts:[],
             searchResults:[],
             mappedResults:[],
         };
@@ -87,7 +87,7 @@ class WassupHome extends Component {
 
     searchSubmit = (e) =>{
         e.preventDefault();
-        fetch('/users/searchPost', {
+        fetch('/users/searchUser', {
             method: 'POST',
             headers: {
                 "Accept": "application/json",
@@ -109,7 +109,7 @@ class WassupHome extends Component {
 
     };
 
-    mapResults = () => {
+    resultsMap = () => {
         let mappedResults = this.state.searchResults.map((eachResult)=> {
             return(
                 <div>
@@ -124,9 +124,9 @@ class WassupHome extends Component {
     render() {
         if (this.props.isLoggedIn === true) {
             return (
-                <div className="App">
+                <div>
                     <div>
-                        <form onSubmit={this.searchSubmit}>
+                        <form className='search' onSubmit={this.searchSubmit}>
                             <label htmlFor={'searchBar'}>Search: </label>
                             <input type="text" name={'searchBar'} />
                             <button>Go</button>
@@ -134,8 +134,8 @@ class WassupHome extends Component {
                     </div>
                     <br/>
                     {this.state.mappedResults}
-                    <h3>Find out Wassup: </h3>
-                    <hr/>
+                    <h3 className='publicPostHead'>Find out Wassup: </h3>
+                    <br/>
                     {this.state.privatePost}
                 </div>
             );
@@ -143,23 +143,27 @@ class WassupHome extends Component {
         else {
             return (
                 <div>
-                    <form className={'formStyle'} onSubmit={this.searchSubmit}>
+                    <form className='search' onSubmit={this.searchSubmit}>
                         <label htmlFor={'searchBar'}>Search: </label>
                         <input type="text" name={'searchBar'} />
                         <button>Go</button>
                     </form>
                     <br/>
                     {this.state.mappedResults}
-                    <h4>Sign In</h4>
-                    <form onSubmit={this.signInSubmit}>
+                    <h4 className='signinHead'>Sign In</h4>
+                    <form className='signinForm' onSubmit={this.signInSubmit}>
                         <label htmlFor={'username'}>Username: </label>
                         <input type="text" id={'username'} name={'username'}/>
+                        <br/>
+                        <h1></h1>
                         <label htmlFor={'password'}>Password: </label>
                         <input type="password" id={'password'} name={'password'}/>
+                        <br/>
+                        <h1></h1>
                         <button>Sign In</button>
                     </form>
-                    <h4>Public Post: </h4>
-                    <hr/>
+                    <h4 className='publicPostHead'>Public Post: </h4>
+                    <br/>
                     {this.state.posts}
                 </div>
             );

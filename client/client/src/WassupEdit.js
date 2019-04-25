@@ -42,7 +42,7 @@ class WassupEdit extends Component{
 
 
     render(){
-        if(this.props.logInfo.loggedIn){
+        if(this.state.loggedIn){
 
             return (
                 <div>

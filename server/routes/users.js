@@ -110,7 +110,7 @@ router.post('/addPost', (req, res) => {
   WassupUserCollection.findOneAndUpdate({username: req.body.username},
       {$push: {wassupPost: req.body}}, (errors) => {
         if (errors) res.send(errors);
-        else {res.send("Wassup Post Successful")};
+        else res.send("Wassup Post Successful");
       });
 });
 
@@ -119,7 +119,7 @@ router.post('/editPost/:id/:postId', (req, res) => {
       {
         $set: {
           "wassupPost.$.postBody": req.body.postBody,
-          "wassupPost.$.postImage": req.body.postPublic,
+          "wassupPost.$.postImage": req.body.postImage,
           "wassupPost.$.postPublic": req.body.postPublic
         }
       }, (errors) => {
@@ -140,34 +140,13 @@ router.get('/grabPost', (req, res) => {
   })
 });
 
-router.post('/searchPost', (req, res) => {
-  WassupUserCollection.find(
-      {"wassupPost.postBody": {"$regex": req.body.searchBar, "$options": "i"}}, (errors, results) => {
-        if (errors) res.send(errors);
-        else {
-          let resultsArray = [];
-          let sendArray = [];
-          for (let i = 0; i < results.length; i++) {
-            for (let j = 0; j < results[i].wassupPost.length; j++) {
-              resultsArray.push(results[i].wassupPost[j].postBody,);
-            }
-          }
-          for(let i=0; i<resultsArray.length; i++){
-            if(resultsArray[i].includes(req.body.searchBar)){
-              sendArray.push(resultsArray[i])
-            }
-          }
-          res.send(sendArray);
-        }
-      })
-});
 
-
-router.post('/searchUsers', (req, res) => {
+router.post('/searchUsers/:username', (req, res) => {
   WassupUserCollection.findOne({username: req.body.username}, (errors, results) => {
     if (errors) res.send(errors);
     else {
       res.send(results);
+      console.log(results)
     }
   })
 });

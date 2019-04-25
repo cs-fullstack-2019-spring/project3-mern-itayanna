@@ -18,7 +18,7 @@ class App extends Component {
     }
 
     userLog = (username,isLoggedIn) =>{
-        this.setState({username:username, isLoggedIn:isLoggedIn})
+        this.setState({username:username, isLoggedIn:true})
     };
 
     userLogout = () => {
@@ -27,12 +27,17 @@ class App extends Component {
 
     render() {
         return (
+            <div className='App'>
+            <div className="grid-containerHead">
             <Router>
-                <div className="App">
-                    <h1>Wassup???!!!</h1>
+                <div className="navBar">
+                    <h1 className="homeHeader">Wassup???!!!</h1>
                     <Link to={'/'}>Home</Link>
+                    /
                     <Link to={'/signUp'}>Sign Up</Link>
+                    /
                     <Link to={'/profile'}>Profile</Link>
+                    /
                     <Link to={'/logout'} onClick={this.userLogout}>Logout</Link>
                 </div>
                 <Route path={'/'} exact component={()=> <WassupHome username={this.state.username} isLoggedIn={this.state.isLoggedIn} userLog={this.userLog}/>} />
@@ -41,6 +46,8 @@ class App extends Component {
                 <Route path={'/logout'} component={()=> <WassupLogout/>} />
                 <Route path={'/editPost/:id/:postId'} component={()=> <WassupEdit/>} />
             </Router>
+            </div>
+            </div>
         );
     }
 }
