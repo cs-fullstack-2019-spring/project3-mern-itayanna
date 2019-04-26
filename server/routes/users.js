@@ -62,12 +62,20 @@ passport.use('signUp', new LocalStrategy(
 
 router.post('/signUp',
     passport.authenticate('signUp',
-        {failureRedirect: '/users/signUpfail'}
+        { successRedirect: '/users/signUpsuccess',
+            failureRedirect: '/users/signUpfail'
+        }
     ), (req, res) => {
       res.send(req.body.username)
     });
+
 router.get('/signUpfail', (req, res) => {
   res.send("Sign Up failed. Please try again. ");
+});
+
+router.get('/signUpsuccess', (req, res) => {
+    console.log('sucess redirect point hit');
+  res.send("Your account has been created!!! Come on sign in and tell us Wassup!! ");
 });
 
 passport.use(new LocalStrategy(

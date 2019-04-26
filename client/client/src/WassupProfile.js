@@ -24,7 +24,7 @@ class WassupProfile extends Component {
                     username:this.props.username,
                 })
             })
-                .then(data=>data.json())
+                .then(data=>data.text())
                 .then(returnedData => this.setState({userData:returnedData}))
                 .then(()=> this.mapPost())
         }
@@ -71,7 +71,6 @@ class WassupProfile extends Component {
             })
         })
     };
-
 
     render() {
         if (this.props.isLoggedIn === true) {

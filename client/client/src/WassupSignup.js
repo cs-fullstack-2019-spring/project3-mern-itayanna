@@ -5,6 +5,7 @@ class WassupSignup extends Component{
         super(props);
         this.state={
             data:'',
+            formSubmit:false
         };
     }
 
@@ -24,9 +25,13 @@ class WassupSignup extends Component{
                     backgroundPic: e.target.backgroundPic.value,
                 }),
             })
+            .then(data => data.text())
+            .then(response => this.setState({data: response}))
+            .then(this.setState({formSubmit: true}));
     };
 
     render(){
+        if (this.state.formSubmit === false){
         return(
             <div>
                 <h1 className='joinHead'>Join Wassup!</h1>
@@ -50,12 +55,25 @@ class WassupSignup extends Component{
 
                         <input type="submit" value={'Submit'}/>
                 </form>
-                {this.state.data}
+
+            }
+                }
+
+
             </div>
 
-        );
-    }
-}
+        );}
+        else {
+            return (
+                <div>
+                    <h1>
+                        {this.state.data}
+                    </h1>
+                </div>
+            );
+        }
+    }}
+
 
 
 export default WassupSignup;

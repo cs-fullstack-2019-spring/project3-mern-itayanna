@@ -17,7 +17,7 @@ class App extends Component {
         }
     }
 
-    userLog = (username,isLoggedIn) =>{
+    userLog = (username, isLoggedIn) =>{
         this.setState({username:username, isLoggedIn:true})
     };
 
@@ -41,7 +41,7 @@ class App extends Component {
                     <Link to={'/logout'} onClick={this.userLogout}>Logout</Link>
                 </div>
                 <Route path={'/'} exact component={()=> <WassupHome username={this.state.username} isLoggedIn={this.state.isLoggedIn} userLog={this.userLog}/>} />
-                <Route path={'/signUp'} component={() => <WassupSignup userInfo={this.userInfo} />} />
+                <Route path={'/signUp'} component={() => <WassupSignup userInfo={this.userLog} />} />
                 <Route path={'/profile'} component={() => <WassupProfile username={this.state.username} isLoggedIn={this.state.isLoggedIn}/>} />
                 <Route path={'/logout'} component={()=> <WassupLogout/>} />
                 <Route path={'/editPost/:id/:postId'} component={()=> <WassupEdit/>} />
