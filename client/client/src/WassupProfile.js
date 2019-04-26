@@ -43,6 +43,7 @@ class WassupProfile extends Component {
                             <p>{eachPost.postBody}</p>
                             <img src={eachPost.postImage} alt="post image"/>
                             <Link to={'/editPost'}>Edit</Link>
+                            <hr/>
                         </div>
                         <Route path={'/editPost'}
                                component={()=> <WassupEdit/>}/>

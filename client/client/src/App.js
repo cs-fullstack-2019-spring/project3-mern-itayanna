@@ -5,7 +5,6 @@ import WassupHome from "./WassupHome";
 import WassupSignup from "./WassupSignup";
 import WassupProfile from "./WassupProfile";
 import WassupLogout from "./WassupLogout";
-import WassupEdit from "./WassupEdit";
 import WassupLogin from "./WassupLogin";
 
 class App extends Component {
@@ -23,7 +22,7 @@ class App extends Component {
     };
 
     userLogout = () => {
-        this.setState({username:null, isLoggedIn:false})
+        this.setState({username:null, isLoggedIn:false});
 
     };
 

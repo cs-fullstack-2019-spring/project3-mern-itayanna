@@ -69,6 +69,7 @@ class WassupHome extends Component {
                     <div key={eachPost._id}>
                         <p>{eachPost.postBody}</p>
                         <img src={eachPost.postImage} alt="post image"/>
+                        <hr/>
                     </div>
                 )
             }
@@ -78,6 +79,7 @@ class WassupHome extends Component {
                 <div key={eachPost._id}>
                     <p>{eachPost.postBody}</p>
                     <img src={eachPost.postImage} alt="post image"/>
+                    <hr/>
                 </div>
             )
         });
@@ -115,6 +117,7 @@ class WassupHome extends Component {
                 <div>
                     <p className={'postBody'}>{eachResult.postBody}</p>
                     <img className={'postImage'} src={eachResult.postImage} alt="post image"/>
+                    <hr/>
                 </div>
             )
         });
