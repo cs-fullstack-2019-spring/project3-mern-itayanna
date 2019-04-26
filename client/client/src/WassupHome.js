@@ -10,7 +10,7 @@ class WassupHome extends Component {
             postMap:[],
             posts:[],
             privatePosts:[],
-            searchResults:[],
+            searchInfo:[],
             mappedResults:[],
         };
         this.wassupPostfech()
@@ -87,7 +87,7 @@ class WassupHome extends Component {
 
     searchSubmit = (e) =>{
         e.preventDefault();
-        fetch('/users/searchUser', {
+        fetch('/users/search', {
             method: 'POST',
             headers: {
                 "Accept": "application/json",
@@ -100,20 +100,21 @@ class WassupHome extends Component {
             .then((data) => data.json())
             .then((data) => {
                 if (data) {
-                    this.setState({searchResults:data});
+                    this.setState({searchInfo:data});
                     this.resultsMap()
                 } else {
-                    this.setState({searchResults:null});
+                    this.setState({searchInfo:null});
                 }
             })
 
     };
 
     resultsMap = () => {
-        let mappedResults = this.state.searchResults.map((eachResult)=> {
+        let mappedResults = this.state.searchInfo.map((eachResult)=> {
             return(
                 <div>
-                    <p>{eachResult}</p>
+                    <p className={'postBody'}>{eachResult.postBody}</p>
+                    <img className={'postImage'} src={eachResult.postImage} alt="post image"/>
                 </div>
             )
         });
@@ -121,15 +122,16 @@ class WassupHome extends Component {
     };
 
 
+
     render() {
         if (this.props.isLoggedIn === true) {
             return (
                 <div>
                     <div>
-                        <form className='search' onSubmit={this.searchSubmit}>
+                        <form className={'formStyle'} onSubmit={this.searchSubmit}>
                             <label htmlFor={'searchBar'}>Search: </label>
                             <input type="text" name={'searchBar'} />
-                            <button>Go</button>
+                            <input type="submit" value={'search'}/>
                         </form>
                     </div>
                     <br/>

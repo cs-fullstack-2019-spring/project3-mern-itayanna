@@ -7,19 +7,15 @@ class WassupEdit extends Component{
     constructor(props) {
         super(props);
         this.state={
-            loggedIn: false,
             postEdit: '',
 
         };
     }
 
-
-
-
-    WassupPostSubmit=(e)=>{
+    editSubmit=(e)=>{
         e.preventDefault();
+        fetch('/users/',{
 
-        fetch('/users/editPost/' + this.props.id + '/' + this.props.postID,{
             method: 'POST',
             headers: {
                 "Accept": "application/json",
@@ -27,12 +23,16 @@ class WassupEdit extends Component{
             },
 
 
-            body: JSON.stringify({
-                postBody: e.target.postBody.value,
-                postImage: e.target.postImage.value,
-                postPublic:e.target.postPublic.checked,
-            })
+            body: JSON.stringify(
+                {
+                    username:this.props.username,
+                    postBody:e.target.postBody.value,
+                    postImage:e.target.postImage.value,
+                }
+            ),
         })
+            .then(data=>data.text())
+            .then(response=>this.setState({postEdit: response}));
     };
 
 
@@ -41,13 +41,13 @@ class WassupEdit extends Component{
 
 
 
+
     render(){
-        if(this.state.loggedIn){
 
             return (
                 <div>
                     <h1>Edit Post</h1>
-                    <form onSubmit={this.WassupPostSubmit}>
+                    <form onSubmit={this.editSubmit}>
                             <label htmlFor={"postBody"}>Wassup!?:</label>
                             <textarea type="text" id={"postBody"} name={"postBody"}/>
                             <label htmlFor={"postImage"}>Add Pic here:</label>
@@ -56,13 +56,6 @@ class WassupEdit extends Component{
                     </form>
                 </div>
             );
-        }
-        else {
-            return(
-                <div>
-                    <h1>Log in Please</h1>
-                </div>);
-        }
 
     }
 

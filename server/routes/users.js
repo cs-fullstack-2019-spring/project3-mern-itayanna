@@ -110,7 +110,8 @@ router.get('/loginFail', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.session = null
+  req.session = null;
+    res.send('Log Out Successful! Come back soon!')
 });
 
 
@@ -122,22 +123,21 @@ router.post('/addPost', (req, res) => {
       });
 });
 
-router.post('/editPost/:id/:postId', (req, res) => {
-  WassupUserCollection.updateOne({_id: req.params.id, "post._id": req.params.postId},
-      {
-        $set: {
-          "wassupPost.$.postBody": req.body.postBody,
-          "wassupPost.$.postImage": req.body.postImage,
-          "wassupPost.$.postPublic": req.body.postPublic
-        }
-      }, (errors) => {
-        if (errors) res.send(errors);
-        else {
-          res.send('Wassup Post Successful')
-        }
-      });
+router.post('/editPost', (req,res)=>{
+    WassupUserCollection.findOneAndUpdate(
+        {_id: req.body.wassupPost},
+        {
+            $set: {
+                'postBody.$': req.body.postBody,
+                'postImage.$': req.body.postImage,
+                'postPublic.$': req.body.postPublic,
+            }
+        },
+        (errors, results)=>{
+            if(errors) res.send(errors);
+            else res.send("Post updated suckseccfully");
+        });
 });
-
 
 router.get('/grabPost', (req, res) => {
   WassupUserCollection.find({}, (errors, results) => {
@@ -157,6 +157,33 @@ router.post('/searchUsers', (req, res) => {
       console.log(results)
     }
   })
+});
+
+router.post('/search', (req, res) => {
+    WassupUserCollection.find(
+        {"wassupPost.postBody": {"$regex": req.body.searchBar, "$options": "i"}}, (errors, results) => {
+            if (errors) res.send(errors);
+            else {
+                let allresults = [];
+                let searchResults = [];
+                for (let i = 0; i < results.length; i++) {
+                    for (let j = 0; j < results[i].wassupPost.length; j++) {
+                        allresults.push(
+                            {
+                                postBody:results[i].wassupPost[j].postBody,
+                                postImage:results[i].wassupPost[j].postImage,
+                            }
+                        )
+                    }
+                }
+                for(let i=0; i<allresults.length; i++){
+                    if(allresults[i].postBody.includes(req.body.searchBar)){
+                        searchResults.push(allresults[i])
+                    }
+                }
+                res.send(searchResults);
+            }
+        })
 });
 
 module.exports = router;

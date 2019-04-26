@@ -8,6 +8,7 @@ class WassupProfile extends Component {
         this.state = {
             userData:'',
             userPost:[],
+            formSubmit: false
         };
         this.userFetch();
     }
@@ -41,10 +42,10 @@ class WassupProfile extends Component {
                         <div key={eachPost._id}>
                             <p>{eachPost.postBody}</p>
                             <img src={eachPost.postImage} alt="post image"/>
-                            <Link to={'/edit/' + this.state.userData._id + '/' + eachPost._id}>Edit</Link>
+                            <Link to={'/editPost'}>Edit</Link>
                         </div>
-                        <Route path={'/edit/' + this.state.userData._id + '/' + eachPost._id}
-                               component={()=> <WassupEdit postBody={eachPost.postBody} postImage={eachPost.postImage} userID={this.state.userData._id} postID={eachPost._id}/>}/>
+                        <Route path={'/editPost'}
+                               component={()=> <WassupEdit/>}/>
                     </Router>
                 )
             });
@@ -67,10 +68,18 @@ class WassupProfile extends Component {
                 postPublic:e.target.postPublic.checked,
             })
         })
+            .then(data => data.text())
+            .then(response => this.setState({resData: response}))
+            .then(this.setState({formSubmit: true}));
+    };
+
+    confirmPost = (e) => {
+        e.preventDefault();
+        this.setState({formSubmit:false})
     };
 
     render() {
-        if (this.props.isLoggedIn === true) {
+        if (this.props.isLoggedIn === true, this.state.formSubmit === false ) {
             return (
                 <div className="App">
                     <h1>{this.props.username}</h1>
@@ -106,6 +115,17 @@ class WassupProfile extends Component {
                     </div>
                 </div>
             );
+        }
+        if (this.state.formSubmit === true){
+            return (
+                <div>
+                    <h1>
+                        {this.state.resData}
+                    </h1>
+                    <button onClick={this.confirmPost}>OK</button>
+
+                </div>
+            )
         }
         else{
             return (
