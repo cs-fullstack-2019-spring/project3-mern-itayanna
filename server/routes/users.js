@@ -118,7 +118,7 @@ router.post('/addPost', (req, res) => {
   WassupUserCollection.findOneAndUpdate({username: req.body.username},
       {$push: {wassupPost: req.body}}, (errors) => {
         if (errors) res.send(errors);
-        else res.send("Wassup Post Successful");
+        else res.send("Wassup Post Successful!");
       });
 });
 

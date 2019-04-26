@@ -8,6 +8,8 @@ class WassupProfile extends Component {
         this.state = {
             userData:'',
             allPost:[],
+            formSubmit: false,
+            resData: ''
         };
         this.userFetch();
     }
@@ -70,10 +72,18 @@ class WassupProfile extends Component {
                 postPublic:e.target.postPublic.checked,
             })
         })
+            .then(data => data.text())
+            .then(response => this.setState({resData: response}))
+            .then(this.setState({formSubmit: true}));
+    };
+
+    confirmPost = (e) => {
+        e.preventDefault();
+        this.setState({formSubmit:false})
     };
 
     render() {
-        if (this.props.isLoggedIn === true) {
+        if (this.props.isLoggedIn === true, this.state.formSubmit === false) {
             return (
                 <div>
                     <h1 className='profilehead'>{this.props.username}</h1>
@@ -100,8 +110,18 @@ class WassupProfile extends Component {
                             {this.state.allPost}
                         </div>
                 </div>
-                    );
-                    }
+                    );}
+        if (this.state.formSubmit === true){
+            return (
+                <div>
+                    <h1>
+                        {this.state.resData}
+                    </h1>
+                    <button onClick={this.confirmPost}>OK</button>
+
+                </div>
+            )
+        }
         else{
             return (
                 <div>
