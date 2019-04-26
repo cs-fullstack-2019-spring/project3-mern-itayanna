@@ -149,7 +149,7 @@ router.get('/grabPost', (req, res) => {
 });
 
 
-router.post('/searchUsers/:username', (req, res) => {
+router.post('/searchUsers', (req, res) => {
   WassupUserCollection.findOne({username: req.body.username}, (errors, results) => {
     if (errors) res.send(errors);
     else {

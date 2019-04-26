@@ -7,9 +7,7 @@ class WassupProfile extends Component {
         super(props);
         this.state = {
             userData:'',
-            allPost:[],
-            formSubmit: false,
-            resData: ''
+            userPost:[],
         };
         this.userFetch();
     }
@@ -26,7 +24,7 @@ class WassupProfile extends Component {
                     username:this.props.username,
                 })
             })
-                .then(data=>data.text())
+                .then(data=>data.json())
                 .then(returnedData => this.setState({userData:returnedData}))
                 .then(()=> this.mapPost())
         }
@@ -41,11 +39,8 @@ class WassupProfile extends Component {
                 return (
                     <Router>
                         <div key={eachPost._id}>
-                            <div>
-                                {eachPost.postBody}
-                            </div>
+                            <p>{eachPost.postBody}</p>
                             <img src={eachPost.postImage} alt="post image"/>
-                            <br/>
                             <Link to={'/edit/' + this.state.userData._id + '/' + eachPost._id}>Edit</Link>
                         </div>
                         <Route path={'/edit/' + this.state.userData._id + '/' + eachPost._id}
@@ -53,7 +48,7 @@ class WassupProfile extends Component {
                     </Router>
                 )
             });
-            this.setState({allPost:postMap})
+            this.setState({userPost:postMap})
         }
     };
 
@@ -72,64 +67,53 @@ class WassupProfile extends Component {
                 postPublic:e.target.postPublic.checked,
             })
         })
-            .then(data => data.text())
-            .then(response => this.setState({resData: response}))
-            .then(this.setState({formSubmit: true}));
-    };
-
-    confirmPost = (e) => {
-        e.preventDefault();
-        this.setState({formSubmit:false})
     };
 
     render() {
-        if (this.props.isLoggedIn === true, this.state.formSubmit === false) {
+        if (this.props.isLoggedIn === true) {
             return (
-                <div>
-                    <h1 className='profilehead'>{this.props.username}</h1>
+                <div className="App">
+                    <h1>{this.props.username}</h1>
+                    <div>
                         <div>
-                            <img src={this.state.userData.profilePic} alt="profile pic"/>
-                            <img src={this.state.userData.backgroundPic} alt="backgroud pic"/>
+                            <img src={this.state.userData.profilePic} alt="PROFILE PIC"/>
+                            <img src={this.state.userData.backgroundPic} alt="BACKGROUND PIC"/>
                         </div>
                         <div>
                             <h2>Wassup?!</h2>
                             <form onSubmit={this.wassupPostSubmit}>
                                 <div>
-                                    <label htmlFor={'postBody'}>Let us know Wassup!: </label>
+                                    <label htmlFor={'postBody'}>Let us know wassup: </label>
                                     <input className={'textBox'} type="text" id={'postBody'} name={'postBody'}/>
-                                    <label htmlFor={'postImage'}>Add Cool Pic Here: </label>
+                                </div>
+                                <div>
+                                    <label htmlFor={'postImage'}>Add a cool image URL: </label>
                                     <input type="text" id={'postImage'} name={'postImage'}/>
-                                    <label htmlFor={'postPublic'}>Wanna make this public?: </label>
+                                </div>
+                                <div>
+                                    <label htmlFor={'postPublic'}>Wanna Make it public?: </label>
                                     <input type="checkbox" name={'postPublic'}/>
-                                    <button>Post</button>
+                                </div>
+                                <div>
+                                    <input type="submit" value={'add post'}/>
                                 </div>
                             </form>
                         </div>
                         <div>
-                            <h3>What used to be Up</h3>
-                            {this.state.allPost}
+                            <h4>What Used to be Up:</h4>
+                            {this.state.userPost}
                         </div>
+                    </div>
                 </div>
-                    );}
-        if (this.state.formSubmit === true){
-            return (
-                <div>
-                    <h1>
-                        {this.state.resData}
-                    </h1>
-                    <button onClick={this.confirmPost}>OK</button>
-
-                </div>
-            )
+            );
         }
         else{
             return (
-                <div>
-                    <h1>Please Log In</h1>
+                <div className="App">
+                    <h3>Please Log In</h3>
                 </div>
-                    )
-                }
-                    }
-                    }
-
-                    export default WassupProfile;
+            )
+        }
+    }
+}
+export default WassupProfile;

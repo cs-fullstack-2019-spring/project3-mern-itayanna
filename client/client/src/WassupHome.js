@@ -136,7 +136,7 @@ class WassupHome extends Component {
                     {this.state.mappedResults}
                     <h3 className='publicPostHead'>Find out Wassup: </h3>
                     <br/>
-                    {this.state.privatePost}
+                    {this.state.postsMap}
                 </div>
             );
         }
@@ -164,7 +164,7 @@ class WassupHome extends Component {
                     </form>
                     <h4 className='publicPostHead'>Public Post: </h4>
                     <br/>
-                    {this.state.posts}
+                    {this.state.postsMap}
                 </div>
             );
         }
